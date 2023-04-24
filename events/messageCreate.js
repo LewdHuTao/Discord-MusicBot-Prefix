@@ -2,38 +2,46 @@ const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { get } = require("../util/db");
 const { platform, arch } = require("os");
 
+const { MessageEmbed } = require("discord.js");
+const db = require("../util/prefixModel");
+
 module.exports = async (client, message) => {
-  const refront = `^<@!?${client.user.id}>`;
-  const mention = new RegExp(refront + "$");
-  const debugIdMention = new RegExp(refront + " debug-id ([^\\s]+)");
-  const invite = `https://discord.com/oauth2/authorize?client_id=${
-    client.config.clientId
-  }&permissions=${client.config.inviteScopes.toString().replace(/,/g, "%20")}`;
 
-  const buttons = new MessageActionRow().addComponents(
-    new MessageButton().setStyle("LINK").setLabel("Invite me").setURL(invite),
-    new MessageButton()
-      .setStyle("LINK")
-      .setLabel("Support server")
-      .setURL(`${client.config.supportServer}`)
-  );
+    if (message.author.bot) return;
+    if (!message.guild) return;
+    let prefix = client.prefix;
+    const channel = message?.channel;
+    const ress = await db.findOne({ Guild: message.guildId })
+    if (ress && ress.Prefix) prefix = ress.Prefix;
 
-  if (message.content.match(mention)) {
-    const mentionEmbed = new MessageEmbed()
-      .setColor(client.config.embedColor)
-      .setDescription(
-        `My prefix on this server is \`/\` (Slash Command).\nTo get started you can type \`/help\` to see all my commands.\nIf you can't see it, Please [re-invite](invite) me with the correct permissions.`
-      );
+    const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
+    if (message.content.match(mention)) {
+        const embed = new MessageEmbed()
+            .setColor(client.config.embedColor)
+            .setDescription(`My prefix in this server is <@${client.user.id}>, \`${prefix}\`, \`/\` (Slash Command).`);
+        message.channel.send({ embeds: [embed] })
+    };
+    const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
+    if (!prefixRegex.test(message.content)) return;
+    const [matchedPrefix] = message.content.match(prefixRegex);
+    const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
 
-    message.channel.send({
-      embeds: [mentionEmbed],
-      components: [buttons],
-    });
-  }
+    const command = client.commands.get(commandName) ||
+        client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
-  if (["750335181285490760"].includes(message.author.id)) {
-    const m = message.content?.match(debugIdMention);
-    const r = m[1]?.length ? get("global")?.[m[1]] : null;
-    message.channel.send(r?.length ? r : platform() + " " + arch());
-  }
+    if (!command) return;
+
+    if (command.owner && message.author.id !== `${client.config.ownerId}`) {
+        return;
+    }
+
+    try {
+        command.run(message, args, client, prefix);
+    } catch (error) {
+        console.log(error);
+        embed.setDescription("An error occured while try to run this command. Please try again").setColor(client.config.embedColor);
+        return message.channel.send({ embeds: [embed] });
+    }
 };

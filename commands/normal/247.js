@@ -1,21 +1,27 @@
-const colors = require("colors");
 const { MessageEmbed } = require("discord.js");
-const SlashCommand = require("../../lib/SlashCommand");
+const colors = require("colors");
 
-const command = new SlashCommand()
-	.setName("247")
-	.setDescription("Prevents the bot from ever disconnecting from a VC (toggle)")
-	.setRun(async (client, interaction, options) => {
-		let channel = await client.getChannel(client, interaction);
+module.exports = {
+    name: "247",
+    category: "Music",
+    description: "247 toggle",
+    args: false,
+    usage: "",
+    permission: [],
+    aliases: [],
+
+    run: async (message, args, client, prefix) => {
+
+        let channel = await client.getChannel(client, message);
 		if (!channel) {
 			return;
 		}
 		
 		let player;
 		if (client.manager) {
-			player = client.manager.players.get(interaction.guild.id);
+			player = client.manager.players.get(message.guild.id);
 		} else {
-			return interaction.reply({
+			return message.reply({
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
@@ -25,7 +31,7 @@ const command = new SlashCommand()
 		}
 		
 		if (!player) {
-			return interaction.reply({
+			return message.reply({
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
@@ -66,7 +72,6 @@ const command = new SlashCommand()
 			player.destroy();
 		}
 		
-		return interaction.reply({ embeds: [twentyFourSevenEmbed] });
-	});
-
-module.exports = command;
+		return message.reply({ embeds: [twentyFourSevenEmbed] });
+    }
+}
