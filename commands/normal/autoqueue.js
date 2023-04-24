@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const colors = requir("colors");
+const colors = require("colors");
 
 module.exports = {
     name: "autoqueue",
