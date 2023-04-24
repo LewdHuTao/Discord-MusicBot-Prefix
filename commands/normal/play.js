@@ -49,7 +49,7 @@ module.exports = {
       ],
     });
 
-    let query = options.getString("query", true);
+    let query = args.join(" ");
     let res = await player.search(query, message.author).catch((err) => {
       client.error(err);
       return {
