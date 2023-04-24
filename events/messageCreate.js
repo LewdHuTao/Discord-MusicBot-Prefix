@@ -1,6 +1,4 @@
-const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { get } = require("../util/db");
-const { platform, arch } = require("os");
+const { MessageEmbed } = require("discord.js");
 const db = require("../util/prefixModel");
 
 module.exports = async (client, message) => {

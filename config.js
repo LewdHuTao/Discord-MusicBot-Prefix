@@ -2,11 +2,11 @@ module.exports = {
 	helpCmdPerPage: 10, //- Number of commands per page of help command
 	lyricsMaxResults: 5, //- Number of results for lyrics command (Do not touch this value if you don't know what you are doing)
 	adminId: "UserId", //- Replace UserId with the Discord ID of the admin of the bot
-	token: process.env.token || "", //- Bot's Token
+	token: process.env.token || "ODkzNjY5MjAzODMwMjU1Njc2.GwQGFS.cx4fCO75CxnEyp0fhWcqYxnUmqQgzi69PhmUm4", //- Bot's Token
 	clientId: process.env.clientId || "", //- ID of the bot
 	clientSecret: process.env.clientSecret || "", //- Client Secret of the bot
-	mongoURL: process.env.mongoURL || "", //- MongoDB URL
-  prefix: process.env.prefix || "", //- Default prefix
+	mongoURL: process.env.mongoURL || "mongodb+srv://imanimtiyaz:imanimtiyaz17@cluster0.ehtt8.mongodb.net/v5", //- MongoDB URL
+  	prefix: process.env.prefix || "?", //- Default prefix
 	port: 4200, //- Port of the API and Dashboard
 	scopes: ["identify", "guilds", "applications.commands"], //- Discord OAuth2 Scopes
 	inviteScopes: ["bot", "applications.commands"], // Invite link scopes
@@ -20,7 +20,7 @@ module.exports = {
 	autoQueue: false, //- When set to true, related songs will automatically be added to the queue
 	autoPause: true, //- When set to true, music will automatically be paused if everyone leaves the voice channel
 	autoLeave: false, //- When set to true, the bot will automatically leave when no one is in the voice channel (can be combined with 24/7 to always be in voice channel until everyone leaves; if 24/7 is on disconnectTime will add a disconnect delay after everyone leaves.)
-	debug: false, //- Debug mode
+	debug: true, //- Debug mode
 	cookieSecret: "CodingWithSudhan is epic", //- Cookie Secret
 	website: "http://localhost:4200", //- without the / at the end
 	// You need a lavalink server for this bot to work!!!!
@@ -28,12 +28,12 @@ module.exports = {
 	nodes: [
 		{
 			identifier: "Main Node", //- Used for indentifier in stats commands.
-			host: "", //- The host name or IP of the lavalink server.
+			host: "lava.link", //- The host name or IP of the lavalink server.
 			port: 80, // The port that lavalink is listening to. This must be a number!
-			password: "", //- The password of the lavalink server.
+			password: "d", //- The password of the lavalink server.
 			retryAmount: 200, //- The amount of times to retry connecting to the node if connection got dropped.
-			retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
-			secure: false, //- Can be either true or false. Only use true if ssl is enabled!
+			retryDelay: 400000, //- Delay between reconnect attempts if connection is lost.
+			secure: true, //- Can be either true or false. Only use true if ssl is enabled!
 		},
 	],
 	embedColor: "#2f3136", //- Color of the embeds, hex supported
