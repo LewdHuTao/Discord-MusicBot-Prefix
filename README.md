@@ -1,8 +1,13 @@
 <h1 align="center"><img src="./assets/logo.gif" width="30px"> Discord Music Bot <img src="./assets/logo.gif" width="30px"></h1>
 
+## 🗒️ | Note 
+- This is an update version of Sudhan Music Bot V5 with prefix functionality. Thanks to @Xynnea (Ry
+#6106) for helping me out to make sure the prefix commands works fine.
+
 ## 🚧 | Prerequisites
 
 - [Node.js 16+](https://nodejs.org/en/download/)
+- [MongoDB](https://www.mongodb.com/docs/manual/installation/) (prefix usage)
 - [Lavalink Server](https://code.darrennathanael.com/how-to-lavalink)
 - You'll need to run `npm run deploy` or `yarn deploy`. to initialized the slash commands. _You can do this on your pc
   locally_
