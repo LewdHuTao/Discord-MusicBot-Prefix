@@ -5,8 +5,9 @@ const LoadCommands = () => {
 	return new Promise(async (resolve) => {
 		let slash = await LoadDirectory("slash");
 		let context = await LoadDirectory("context");
+		let normal = await LoadDirectory("normal")
 		
-		resolve({ slash, context });
+		resolve({ slash, context, normal });
 	});
 };
 
@@ -31,7 +32,9 @@ const LoadDirectory = (dir) => {
 				}
 				if (dir == "context") {
 					commands.push(cmd.command);
-				} else {
+				} else if (dir == "normal") {
+					commands.push(cmd);
+				} else { 
 					commands.push(cmd);
 				}
 			}

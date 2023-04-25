@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const escapeMarkdown = require("discord.js").Util.escapeMarkdown;
 
 module.exports = {
     name: "play",

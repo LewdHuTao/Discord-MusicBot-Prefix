@@ -1,13 +1,13 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-    name: "join",
+    name: "summon",
     category: "Music",
     description: "Make bot join your voice channel",
     args: false,
     usage: "",
     permission: [],
-    aliases: [],
+    aliases: ["join"],
 
     run: async (message, args, client, prefix) => {
 
