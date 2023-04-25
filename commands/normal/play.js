@@ -105,7 +105,7 @@ module.exports = {
         .addFields(
           {
             name: "Added by",
-            value: `<@${message.user.id}>`,
+            value: `<@${message.author.id}>`,
             inline: true,
           },
           {
