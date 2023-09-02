@@ -1,5 +1,12 @@
-const { MessageEmbed } = require("discord.js");
-const fetch = require("node-fetch");
+const SlashCommand = require("../../lib/SlashCommand");
+const {
+	MessageActionRow,
+	MessageSelectMenu,
+	MessageButton,
+	MessageEmbed
+} = require("discord.js");
+const { Rlyrics } = require("rlyrics");
+const lyricsApi = new Rlyrics();
 
 module.exports = {
 	name: "lyrics",
