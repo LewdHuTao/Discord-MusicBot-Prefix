@@ -12,7 +12,6 @@ module.exports = {
 	name: "lyrics",
 	category: "Music",
 	description: "Get lyrics from a song",
-	args: false,
 	usage: "",
 	permission: [],
 	aliases: ["lyric"],
