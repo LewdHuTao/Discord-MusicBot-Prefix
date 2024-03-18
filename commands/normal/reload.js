@@ -60,7 +60,7 @@ module.exports = {
               .setColor(client.config.embedColor)
               .setDescription(`Sucessfully Reloaded \`${totalCmds}\` Commands!`)
               .setFooter({
-                text: `${client.user.username} was reloaded by ${message.user.username}`,
+                text: `${client.user.username} was reloaded by ${message.author.username}`,
               })
               .setTimestamp(),
           ],

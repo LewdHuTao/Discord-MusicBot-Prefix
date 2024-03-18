@@ -6,6 +6,7 @@ module.exports = {
 	clientId: process.env.clientId || "", //- ID of the bot
 	clientSecret: process.env.clientSecret || "", //- Client Secret of the bot
 	mongoURL: process.env.mongoURL || "", //- MongoDB URL
+	geniusAPIKey: process.env.geniusAPIKey || "", //- Genius Key to fetch lyrics
   	prefix: process.env.prefix || "", //- Default prefix
 	port: 4200, //- Port of the API and Dashboard
 	scopes: ["identify", "guilds", "applications.commands"], //- Discord OAuth2 Scopes
