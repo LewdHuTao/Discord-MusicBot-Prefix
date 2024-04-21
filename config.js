@@ -1,3 +1,5 @@
+const restVersion = "v4" // Lavalink version - v3 or v4
+
 module.exports = {
 	helpCmdPerPage: 10, //- Number of commands per page of help command
 	lyricsMaxResults: 5, //- Number of results for lyrics command (Do not touch this value if you don't know what you are doing)
@@ -35,6 +37,7 @@ module.exports = {
 			retryAmount: 200, //- The amount of times to retry connecting to the node if connection got dropped.
 			retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
 			secure: false, //- Can be either true or false. Only use true if ssl is enabled!
+			version: restVersion, // Lavalink version
 		},
 	],
 	embedColor: "#2f3136", //- Color of the embeds, hex supported
