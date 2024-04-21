@@ -90,7 +90,7 @@ module.exports = {
         .catch(this.warn);
     }
 
-    if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
+    if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT" || res.loadType === "track" || res.loadType === "search") {
       player.queue.add(res.tracks[0]);
 
       if (!player.playing && !player.paused && !player.queue.size) {
@@ -143,7 +143,7 @@ module.exports = {
       await interaction.editReply({ embeds: [addQueueEmbed] }).catch(this.warn);
     }
 
-    if (res.loadType === "PLAYLIST_LOADED") {
+    if (res.loadType === "PLAYLIST_LOADED" || res.loadType === "playlist") {
       player.queue.add(res.tracks);
 
       if (
