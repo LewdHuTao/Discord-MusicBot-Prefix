@@ -1,6 +1,6 @@
 const SlashCommand = require("../../lib/SlashCommand");
 const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
-const findLyrics = require("llyrics");
+const { find } = require("llyrics");
 
 const command = new SlashCommand()
   .setName("lyrics")
@@ -90,20 +90,39 @@ const command = new SlashCommand()
 
     let apiKey = client.config.geniusAPIKey;
     let songName = query;
+    let lyrics, trackArtist, trackName, artworkURL;
 
-    await findLyrics(apiKey, songName);
+    const response = await find({
+      song: songName,
+      forceSearch: true,
+      geniusApiKey: apiKey,
+    });
 
-    const lyrics = findLyrics.lyrics;
-    const trackName = findLyrics.trackName;
-    const trackArtist = findLyrics.trackArtist;
+    if (response) {
+      if (response.lyrics === undefined) {
+        return interaction.editReply({
+          embeds: [
+            new MessageEmbed()
+              .setColor(client.config.embedColor)
+              .setDescription(":x: | No lyrics were found."),
+          ],
+        });
+      } else {
+        lyrics = response.lyrics;
+        trackName = response.title;
+        trackArtist = response.artist;
+        artworkURL = response.artworkURL;
+      }
+    }
+
     const pageLength = 2000;
     const pages = splitText(lyrics, pageLength);
-
     let currentPage = 0;
 
     const embed = new MessageEmbed()
       .setColor(client.config.embedColor)
       .setTitle(`${trackName} - ${trackArtist}`)
+      .setThumbnail(artworkURL)
       .setDescription(pages[currentPage])
       .setFooter({ text: `Page: ${currentPage + 1}/${pages.length}` });
 

@@ -1,5 +1,5 @@
 const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
-const findLyrics = require("llyrics");
+const { find } = require("llyrics");
 
 module.exports = {
   name: "lyrics",
@@ -59,7 +59,7 @@ module.exports = {
       }
       let query = args ? args.join(" ") : currentTitle;
 
-      let apiKey = client.config.geniusAPIKey
+      let apiKey = client.config.geniusAPIKey;
 
       function splitText(text, maxChunkLength) {
         const chunks = [];
@@ -70,12 +70,31 @@ module.exports = {
       }
 
       let songName = query;
+      let lyrics, trackArtist, trackName, artworkURL;
 
-      await findLyrics(apiKey, songName);
+      const response = await find({
+        song: songName,
+        forceSearch: true,
+        geniusApiKey: apiKey,
+      });
 
-      const lyrics = findLyrics.lyrics;
-      const trackName = findLyrics.trackName;
-      const trackArtist = findLyrics.trackArtist;
+      if (response) {
+        if (response.lyrics === undefined) {
+          return message.reply({
+            embeds: [
+              new MessageEmbed()
+                .setColor(client.config.embedColor)
+                .setDescription(":x: | No lyrics were found."),
+            ],
+          });
+        } else {
+          lyrics = response.lyrics;
+          trackArtist = response.artist;
+          trackName = response.title;
+          artworkURL = response.artworkURL;
+        }
+      }
+
       const pageLength = 2000;
       const pages = splitText(lyrics, pageLength);
 
@@ -84,6 +103,7 @@ module.exports = {
       const embed = new MessageEmbed()
         .setColor(client.config.embedColor)
         .setTitle(`${trackName} - ${trackArtist}`)
+        .setThumbnail(artworkURL)
         .setDescription(pages[currentPage])
         .setFooter({ text: `Page: ${currentPage + 1}/${pages.length}` });
 
